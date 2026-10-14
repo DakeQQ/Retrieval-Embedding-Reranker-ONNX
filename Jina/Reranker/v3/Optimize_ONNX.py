@@ -33,10 +33,10 @@ upgrade_opset    = 0                     # Optional opset upgrade. Set 0 to disa
 # Model-Dtype Mapping
 # ==============================================================================
 MODEL_DTYPE = {
-    "Reranker_Embed":  "int4",       # [int4, float32, float16]
-    "Reranker_Main":   "int4",       # [int4, int8, float32, float16]
-    "Reranker_Concat": "float32",    # [float32, float16]
-    "Reranker_Score":  "float32",    # [float32, float16]
+    "Reranker_Embed":  "Q4",         # [Q4, F32, F16]
+    "Reranker_Main":   "Q4",         # [Q4, Q8, F32, F16]
+    "Reranker_Concat": "F32",        # [F32, F16]
+    "Reranker_Score":  "F32",        # [F32, F16]
 }
 
 
@@ -327,9 +327,9 @@ for model_name, target_dtype in MODEL_DTYPE.items():
     print(f"\n--- Processing model: {model_name} ---")
 
     # Reset per-iteration quantization flags
-    quant_int4 = (target_dtype == "int4")
-    quant_int8 = (target_dtype == "int8")
-    quant_float16 = (target_dtype == "float16")
+    quant_int4 = (target_dtype == "Q4")
+    quant_int8 = (target_dtype == "Q8")
+    quant_float16 = (target_dtype == "F16")
 
     print(f"Selected target dtype for {model_name}: {target_dtype}")
     print(f"quant_int8={quant_int8}, quant_float16={quant_float16}, keep_io_dtype={keep_io_dtype}")

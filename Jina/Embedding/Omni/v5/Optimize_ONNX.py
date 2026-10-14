@@ -48,22 +48,22 @@ ONLY_ONNXRUNTIME = True
 # ==============================================================================
 # Model-Dtype Mapping
 # ==============================================================================
-# 'q8_dynamic' = INT8 dynamic per-channel quantization (Q4.py vision recipe). int4 noticeably
-#                hurts the vision tower, so it gets int8 + the TransposeOptimizer disabled.
+# 'DYNAMIC' = INT8 dynamic per-channel quantization (Q4.py vision recipe). Q4 noticeably
+#             hurts the vision tower, so it gets Q8 + the TransposeOptimizer disabled.
 # The LoRA provider + combine routers now flow through the same optimize/quant pipeline as every
 # other graph (no more verbatim copy). They default to float32 (optimize-only) so the LoRA
 # provider's fp32 constant outputs and the combine routers' fp32 routing still match the consuming
 # graphs' fp32 inputs; their runtime metadata_props are re-attached after processing (see
-# _carry_over_metadata_props). Override per graph freely, but note fp16/int* on the LoRA/combine
+# _carry_over_metadata_props). Override per graph freely, but note F16/Q4/Q8 on the LoRA/combine
 # graphs changes their output dtype and needs matching dtypes at the consuming graph inputs.
 MODEL_DTYPE = {
-    "Omni_Embed":         "int4",        # token-embedding table        [int4, int8, float32, float16]
-    "Omni_Vision":        "q8_dynamic",  # vision tower  (Qwen3VL)      INT8 dynamic per-channel (Q4.py)
-    "Omni_Audio":         "int4",        # audio tower   (Qwen2.5-Omni) [int4, int8, float32, float16]
-    "Omni_Main":          "int4",        # text backbone (EuroBERT)     [int4, int8, float32, float16]
-    "Omni_LoRA":          "int4",        # LoRA/merger/projector provider (constant outputs)  [float32, float16, int4, int8]
-    "Omni_Combine_Image": "float32",     # tiny routing graph + runtime metadata              [float32, float16, int4, int8]
-    "Omni_Combine_Audio": "float32",     # tiny routing graph + runtime metadata              [float32, float16, int4, int8]
+    "Omni_Embed":         "Q4",          # token-embedding table        [Q4, Q8, F32, F16]
+    "Omni_Vision":        "DYNAMIC",     # vision tower  (Qwen3VL)      INT8 dynamic per-channel (Q4.py)
+    "Omni_Audio":         "Q4",          # audio tower   (Qwen2.5-Omni) [Q4, Q8, F32, F16]
+    "Omni_Main":          "Q4",          # text backbone (EuroBERT)     [Q4, Q8, F32, F16]
+    "Omni_LoRA":          "Q4",          # LoRA/merger/projector provider (constant outputs)  [F32, F16, Q4, Q8]
+    "Omni_Combine_Image": "F32",         # tiny routing graph + runtime metadata              [F32, F16, Q4, Q8]
+    "Omni_Combine_Audio": "F32",         # tiny routing graph + runtime metadata              [F32, F16, Q4, Q8]
 }
 
 
@@ -491,10 +491,10 @@ for model_name, target_dtype in MODEL_DTYPE.items():
         continue
 
     # Reset per-iteration quantization flags
-    quant_int4 = (target_dtype == "int4")
-    quant_int8 = (target_dtype == "int8")
-    quant_float16 = (target_dtype == "float16")
-    quant_q8_vision = (target_dtype == "q8_dynamic")
+    quant_int4 = (target_dtype == "Q4")
+    quant_int8 = (target_dtype == "Q8")
+    quant_float16 = (target_dtype == "F16")
+    quant_q8_vision = (target_dtype == "DYNAMIC")
 
     print(f"Selected target dtype for {model_name}: {target_dtype}")
     print(f"quant_int8={quant_int8}, quant_float16={quant_float16}, "
