@@ -13,16 +13,16 @@
 ## 性能 Performance  
 | OS           | Device       | Backend           | Model        | Time Cost in Seconds|
 |:------------:|:------------:|:-----------------:|:------------:|:------------------------------------------------:|
-| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | GTE-Large-Chinese <br> f32 | 0.11                               |
-| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | GTE-Large-Chinese <br> q8f32 | 0.035                            |
-| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | Jina-Embedding-v5-Text-small <br> q8f32 | 0.4                   |
-| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | Jina-Reranker-v3  <br> f32 | 0.7                                |
-| Linux x86_64 | Laptop/Desktop | CPU <br> Multi-Core | all-MiniLM-L6-v2 <br> f32 | 0.010                            |
-| Linux x86_64 | Laptop/Desktop | CPU <br> Multi-Core | all-MiniLM-L6-v2 <br> int4 (k_quant) | 0.005                 |
+| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | GTE-Large-Chinese <br> F32 | 0.11                               |
+| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | GTE-Large-Chinese <br> Q8F32 | 0.035                            |
+| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | Jina-Embedding-v5-Text-small <br> Q8F32 | 0.4                   |
+| Ubuntu-24.04 | Laptop      | CPU <br> i7-1165G7 | Jina-Reranker-v3  <br> F32 | 0.7                                |
+| Linux x86_64 | Laptop      | CPU <br> i7-1165G7 | all-MiniLM-L6-v2 <br> F32 | 0.010                               |
+| Linux x86_64 | Laptop      | CPU <br> i7-1165G7 | all-MiniLM-L6-v2 <br> Q4  | 0.005                               |              
 
 
 
 ---
 
 ## To-Do List  
-- [ ] [Jina-Embedding-Omni-v5](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small)
+- [ ]
