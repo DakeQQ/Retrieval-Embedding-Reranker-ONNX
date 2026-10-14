@@ -6,6 +6,7 @@
 ## 支持的模型 Supported Models:
 - [GTE-Tiny / Small / Base / Large + Chinese / English](https://modelscope.cn/models/iic/nlp_gte_sentence-embedding_chinese-large)
 - [Jina-Embedding-v5-Text-small / nano](https://huggingface.co/jinaai/jina-embeddings-v5-text-small)
+- [Jina-Embedding-v5-Omni-small / nano](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small)
 - [Jina-Reranker-v3](https://huggingface.co/jinaai/jina-reranker-v3)
 - [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
 
